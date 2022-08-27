@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package daemon;
-option go_package = "dcmsg.daemon";
+option go_package = "yadcmd.daemon";
 
 service Daemon {
     rpc Greeting(Hello) returns (Hello);
