@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package daemon;
+option go_package = "dcmsg.daemon";
+
+service Daemon {
+    rpc Greeting(Hello) returns (Hello);
+}
+
+message Hello {
+    int32 version = 1;
+}
