@@ -4,37 +4,44 @@ package daemon;
 option go_package = "protocol/daemon";
 
 import "local.proto";
-import "remote.proto";
+// import "remote.proto";
 
 service InternalAPI {
-    rpc Setup (local.Config) returns (local.Config);
-    rpc Online (local.ClientInfo) returns (stream Message);
-    rpc Scan (local.ScanRequest) returns (local.ScanResponse);
-    rpc Send (Message) returns (Message);
+    rpc Setup (local.Config) returns (local.Config); //Configure daemon
+    rpc Online (local.ClientInfo) returns (stream Message); //Recv messages to gui
+    rpc Scan (local.ScanRequest) returns (local.ScanResponse); //Scan given network for daemons
+    rpc Send (Message) returns (Message); //Send message
+    rpc LsRooms (local.ListRoomsRequest) returns (local.ListRoomsResponse); //List rooms
+    rpc LsMessages (local.ListMessagesRequest) returns (ListMesagesResponse); //List messages in room
+    rpc HostStats (local.HostStatsRequest) returns (local.HostStatsResponse); //List hosts
 }
 
 service ExternalAPI {
-    rpc Info (remote.DaemonInfo) returns (remote.DaemonInfo);
-    rpc OnMessage (Message) returns (Message);
+    rpc Info (local.Host) returns (local.Host); //Method for InternalAPI.Scan response
+    rpc Recieve (Message) returns (Message); //Recieving message
 }
 
 enum MessageType {
-    CREATE = 0;
-    DELETE = 1;
-    EXIT = 2;
-    EDIT = 3;
-    TEXT = 4;
-    REPLY = 5;
-    FORWARD = 6;
+    CREATE = 0; //Room created
+    DELETE = 1; //Room deleted
+    EXIT = 2; //Member left
+    EDIT = 3; //Message edited
+    TEXT = 4; //Plain text message
+    REPLY = 5; //Reply to message
+    FORWARD = 6; //Forwarded message
+    KEY = 7; //Encryption keys exchange;
 }
 
 message Message {
-    int64 id = 1;
-    int64 source = 2;
-    int64 from = 3;
-    string signature = 4;
-    string body = 5;
-    optional int64 chat_id = 6;
-    optional int64 message_id = 7;
+    int64 id = 1; //Message ID
+    MessageType type = 2; //Type of the message
+    uint64 from = 3; //Author ID
+    string signature = 4; //Message ecdsa signature
+    int64 room_id = 5; //ID of the room; Negative means group room
+    optional string body = 6; //Message body; Could be nil, depends on Type
+    optional int64 message_id = 7; //Target message; Used for Types REPLY, FORWARD, EDIT...
+    optional int64 external_room_id = 8; //Target room ID; Used for FORWARD
 }
-
+message ListMesagesResponse {
+    repeated Message messages = 1;
+}
