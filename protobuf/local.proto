@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package internal;
+package local;
 option go_package = "protocol/daemon";
 
 message ClientInfo {

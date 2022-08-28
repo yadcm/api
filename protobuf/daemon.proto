@@ -3,14 +3,14 @@ syntax = "proto3";
 package daemon;
 option go_package = "protocol/daemon";
 
-import "internal.proto";
-import "external.proto";
+import "local.proto";
+import "remote.proto";
 
 service InternalAPI {
-    rpc Online (internal.ClientInfo) returns (external.DaemonInfo);
+    rpc Online (local.ClientInfo) returns (remote.DaemonInfo);
 }
 
 service ExternalAPI {
-    rpc Handshake(external.HandshakeInfo) returns (external.HandshakeInfo);
+    rpc Handshake(remote.HandshakeInfo) returns (remote.HandshakeInfo);
 }
 

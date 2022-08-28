@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package external;
+package remote;
 option go_package = "protocol/daemon";
 
 message DaemonInfo {
