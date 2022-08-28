@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package model;
-option go_package = "protocol.daemon.model.internal";
-
-message ClientInfo {
-    uint32 version = 1;
-}

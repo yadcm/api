@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package internal;
+option go_package = "protocol/daemon";
+
+message ClientInfo {
+    uint32 version = 1;
+}
