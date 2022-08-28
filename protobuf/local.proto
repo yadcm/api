@@ -3,16 +3,11 @@ syntax = "proto3";
 package local;
 option go_package = "protocol/daemon";
 
-message ConfigRequest {}
-message ConfigResponse {
-    Info daemon = 1;
-}
-
 message Config {
     string tag = 1;
 }
 
-message Info {
+message ClientInfo {
     uint32 version = 1;
 }
 
