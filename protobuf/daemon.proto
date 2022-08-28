@@ -1,12 +1,16 @@
 syntax = "proto3";
 
 package daemon;
-option go_package = "yadcmd.daemon";
+option go_package = "protocol.daemon";
 
-service Daemon {
-    rpc Greeting(Hello) returns (Hello);
+import "protobuf/messages/internal.proto";
+import "protobuf/messages/external.proto";
+
+service InternalAPI {
+    rpc Online (ClientInfo) returns (DaemonInfo);
 }
 
-message Hello {
-    int32 version = 1;
+service ExternalAPI {
+    rpc Handshake(HandshakeInfo) returns (HandshakeInfo);
 }
+
