@@ -10,11 +10,12 @@ service InternalAPI {
     rpc Setup (local.Config) returns (local.Config);
     rpc Online (local.ClientInfo) returns (stream Message);
     rpc Scan (local.ScanRequest) returns (local.ScanResponse);
+    rpc Send (Message) returns (Message);
 }
 
 service ExternalAPI {
     rpc Info (remote.DaemonInfo) returns (remote.DaemonInfo);
-    rpc Send (Message) returns (Message);
+    rpc OnMessage (Message) returns (Message);
 }
 
 enum MessageType {
